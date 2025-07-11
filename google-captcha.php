@@ -30,25 +30,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** BOF Fatal Error Level 1 Suppression
- * Fixed a fatal bug, but an error may still occur when some functions are missing from a file that is not there.
+/** BOF Fatal error removal
+ * The '/includes/forminator.php' file is only needed for the Pro version. 
+ * So, a check to see if the file exists or not has been added.
  * 
  * @author Grzegorz Kisielewicz <grzegorzk81@gmail.com>
- * Issues:
+ * 
+ * More about bug:
  * 	- [PHP Fatal error after v1.82 update](https://wordpress.org/support/topic/php-fatal-error-after-v1-82-update/)
  */
 $forminator_file = '/includes/forminator.php';
 $forminator_path = dirname( __FILE__ ) . $forminator_file;
 require_once dirname( __FILE__ ) . '/includes/forms.php';
 if(file_exists($forminator_path))
-{
 	require_once $forminator_path;
-} else {
-		trigger_error(sprintf('File `%s` not found.', substr($forminator_file, 1)), E_USER_WARNING);
-	}
+else
+	trigger_error(sprintf('File `%s` not found.', substr($forminator_file, 1)), E_USER_WARNING);
 unset($forminator_file, $forminator_path);
 /**
- * EOF Fatal Error Level 1 Suppression
+ * EOF Fatal error removal
  */
 
 if ( ! function_exists( 'gglcptch_admin_menu' ) ) {
