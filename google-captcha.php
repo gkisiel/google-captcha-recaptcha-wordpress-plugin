@@ -42,10 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $forminator_file = '/includes/forminator.php';
 $forminator_path = dirname( __FILE__ ) . $forminator_file;
 require_once dirname( __FILE__ ) . '/includes/forms.php';
-if(file_exists($forminator_path))
-	require_once $forminator_path;
-else
-	trigger_error(sprintf('File `%s` not found.', substr($forminator_file, 1)), E_USER_WARNING);
+file_exists($forminator_path) && require_once $forminator_path;
 unset($forminator_file, $forminator_path);
 /**
  * EOF Fatal error removal
