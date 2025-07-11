@@ -3,10 +3,10 @@
 Plugin Name: reCaptcha by BestWebSoft
 Plugin URI: https://bestwebsoft.com/products/wordpress/plugins/google-captcha/
 Description: Protect WordPress website forms from spam entries with Google Captcha (reCaptcha).
-Author: BestWebSoft
+Author: BestWebSoft & Grzegorz Kisielewicz
 Text Domain: google-captcha
 Domain Path: /languages
-Version: 1.82
+Version: 1.82.1
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
  */
@@ -30,8 +30,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/** BOF Fatal Error Level 1 Suppression
+ * Fixed a fatal bug, but an error may still occur when some functions are missing from a file that is not there.
+ * 
+ * @author Grzegorz Kisielewicz <grzegorzk81@gmail.com>
+ * Issues:
+ * 	- [PHP Fatal error after v1.82 update](https://wordpress.org/support/topic/php-fatal-error-after-v1-82-update/)
+ */
+$forminator_file = '/includes/forminator.php';
+$forminator_path = dirname( __FILE__ ) . $forminator_file;
 require_once dirname( __FILE__ ) . '/includes/forms.php';
-require_once dirname( __FILE__ ) . '/includes/forminator.php';
+if(file_exists($forminator_path))
+{
+	require_once $forminator_path;
+} else {
+		trigger_error(sprintf('File `%s` not found.', substr($forminator_file, 1)), E_USER_WARNING);
+	}
+unset($forminator_file, $forminator_path);
+/**
+ * EOF Fatal Error Level 1 Suppression
+ */
 
 if ( ! function_exists( 'gglcptch_admin_menu' ) ) {
 	/**
